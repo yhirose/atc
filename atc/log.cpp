@@ -51,6 +51,9 @@
 
 #include <sys/utsname.h>
 
+#include <string>
+#include <iostream>
+
 static FILE *score_fp;
 
 static int	compar(const void *, const void *);
@@ -99,6 +102,54 @@ timestr(int t)
 	return (s);
 }
 
+
+bool create_directories(const std::string& path) {
+  std::string command = "mkdir -p " + path;
+  int status = system(command.c_str());
+
+  if (status == 0) {
+    return true;
+  } else {
+    return false;
+  }
+}
+
+std::string extract_directory(const std::string& path) {
+  std::size_t lastSeparator = path.find_last_of(R"(/\)");
+  if (lastSeparator != std::string::npos) {
+    return path.substr(0, lastSeparator);
+  } else {
+    return "";
+  }
+}
+
+std::string expand_tilde(const std::string& path) {
+  if (!path.empty() && path[0] == '~') {
+    std::string homeDir;
+    const char* homeEnv = std::getenv("HOME");
+    if (homeEnv) {
+      homeDir = homeEnv;
+    } else {
+      const char* userEnv = std::getenv("USER");
+      if (userEnv) {
+        homeDir = "/Users/";
+        homeDir += userEnv;
+      } else {
+        std::cerr << "Error: Failed to get home directory." << std::endl;
+        return path;
+      }
+    }
+    return homeDir + path.substr(1);
+  }
+  return path;
+}
+
+int open_file(const char *path) {
+  create_directories(extract_directory(path));
+  auto expanded_path = expand_tilde(path);
+	return open(expanded_path.c_str(), O_CREAT|O_RDWR, 0664);
+}
+
 void
 open_score_file(void)
 {
@@ -107,7 +158,7 @@ open_score_file(void)
 	int flags;
 
 	old_mask = umask(0);
-	score_fd = open(_PATH_SCORE, O_CREAT|O_RDWR, 0664);
+	score_fd = open_file(_PATH_SCORE);
 	umask(old_mask);
 	if (score_fd < 0) {
 		warn("open %s", _PATH_SCORE);

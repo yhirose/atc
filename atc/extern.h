@@ -78,7 +78,7 @@ extern int	dir_no(char);
 extern int	getcommand(void);
 /* list.c */
 extern void	append(LIST *, PLANE *);
-extern void	delete(LIST *, PLANE *);
+extern void	delete_renamed(LIST *, PLANE *);
 extern PLANE	*newplane(void);
 /* log.c */
 extern int	log_score(int);

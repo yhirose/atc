@@ -31,5 +31,5 @@
 
 #include <paths.h>
 
-#define	_PATH_GAMES	"/usr/local/share/games/atc/"
-#define	_PATH_SCORE	"/usr/local/var/games/atc_score"
+#define	_PATH_GAMES	"./games/"
+#define	_PATH_SCORE	"~/.atc/atc_score"

@@ -90,7 +90,7 @@ append(LIST *l, PLANE *p)
 }
 
 void
-delete(LIST *l, PLANE *p)
+delete_renamed(LIST *l, PLANE *p)
 {
 	if (l->head == NULL)
 		loser(p, "deleted a non-existent plane! Get help!");

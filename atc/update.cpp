@@ -66,7 +66,7 @@ update(void)
 		unclean = 0;
 		for (pp = ground.head; pp != NULL; pp = pp->next) {
 			if (pp->new_altitude > 0) {
-				delete(&ground, pp);
+				delete_renamed(&ground, pp);
 				append(&air, pp);
 				unclean = 1;
 				break;
@@ -183,7 +183,7 @@ update(void)
 		p2 = pp->next;
 		if (pp->status == S_GONE) {
 			safe_planes++;
-			delete(&air, pp);
+			delete_renamed(&air, pp);
 		}
 	}
 

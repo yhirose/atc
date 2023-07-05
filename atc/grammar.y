@@ -174,10 +174,10 @@ Bpoint:
 		{
 		if (sp->num_beacons % REALLOC == 0) {
 			if (sp->beacon == NULL)
-				sp->beacon = malloc((sp->num_beacons + REALLOC)
+				sp->beacon = (BEACON *)malloc((sp->num_beacons + REALLOC)
 					* sizeof(BEACON));
 			else
-				sp->beacon = realloc(sp->beacon,
+				sp->beacon = (BEACON *)realloc(sp->beacon,
 					(sp->num_beacons + REALLOC) *
 					sizeof(BEACON));
 			if (sp->beacon == NULL)
@@ -204,10 +204,10 @@ Epoint:
 
 		if (sp->num_exits % REALLOC == 0) {
 			if (sp->exit == NULL)
-				sp->exit = malloc((sp->num_exits + REALLOC) *
+				sp->exit = (BEACON *)malloc((sp->num_exits + REALLOC) *
 					sizeof(EXIT));
 			else
-				sp->exit = realloc(sp->exit, (sp->num_exits +
+				sp->exit = (BEACON *)realloc(sp->exit, (sp->num_exits +
 					REALLOC) * sizeof(EXIT));
 			if (sp->exit == NULL)
 				return (yyerror("No memory available."));
@@ -236,10 +236,10 @@ Apoint:
 
 		if (sp->num_airports % REALLOC == 0) {
 			if (sp->airport == NULL)
-				sp->airport = malloc((sp->num_airports +
+				sp->airport = (BEACON *)malloc((sp->num_airports +
 					REALLOC) * sizeof(AIRPORT));
 			else
-				sp->airport = realloc(sp->airport,
+				sp->airport = (BEACON *)realloc(sp->airport,
 					(sp->num_airports + REALLOC) *
 					sizeof(AIRPORT));
 			if (sp->airport == NULL)
@@ -266,10 +266,10 @@ Lline:
 		{
 		if (sp->num_lines % REALLOC == 0) {
 			if (sp->line == NULL)
-				sp->line = malloc((sp->num_lines + REALLOC) *
+				sp->line = (LINE *)malloc((sp->num_lines + REALLOC) *
 					sizeof(LINE));
 			else
-				sp->line = realloc(sp->line, (sp->num_lines +
+				sp->line = (LINE *)realloc(sp->line, (sp->num_lines +
 					REALLOC) * sizeof(LINE));
 			if (sp->line == NULL)
 				return (yyerror("No memory available."));
