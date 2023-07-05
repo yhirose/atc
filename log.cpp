@@ -103,48 +103,48 @@ timestr(int t)
 }
 
 
-bool create_directories(const std::string& path) {
+bool
+create_directories(const std::string& path)
+{
   std::string command = "mkdir -p " + path;
-  int status = system(command.c_str());
-
-  if (status == 0) {
-    return true;
-  } else {
-    return false;
-  }
+  return !system(command.c_str());
 }
 
-std::string extract_directory(const std::string& path) {
-  std::size_t lastSeparator = path.find_last_of(R"(/\)");
-  if (lastSeparator != std::string::npos) {
-    return path.substr(0, lastSeparator);
-  } else {
-    return "";
+std::string
+extract_directory(const std::string& path) {
+  std::size_t pos = path.find_last_of(R"(/\)");
+  if (pos != std::string::npos) {
+    return path.substr(0, pos);
   }
+  return "";
 }
 
-std::string expand_tilde(const std::string& path) {
+std::string
+expand_tilde(const std::string& path)
+{
   if (!path.empty() && path[0] == '~') {
-    std::string homeDir;
-    const char* homeEnv = std::getenv("HOME");
-    if (homeEnv) {
-      homeDir = homeEnv;
+    std::string expaned_home_dir;
+    auto home = std::getenv("HOME");
+    if (home) {
+      expaned_home_dir = home;
     } else {
-      const char* userEnv = std::getenv("USER");
-      if (userEnv) {
-        homeDir = "/Users/";
-        homeDir += userEnv;
+      auto user = std::getenv("USER");
+      if (user) {
+        expaned_home_dir = "/Users/";
+        expaned_home_dir += user;
       } else {
-        std::cerr << "Error: Failed to get home directory." << std::endl;
+        std::cerr << "failed to get home directory." << std::endl;
         return path;
       }
     }
-    return homeDir + path.substr(1);
+    return expaned_home_dir + path.substr(1);
   }
   return path;
 }
 
-int open_file(const char *path) {
+int
+open_file(const char *path)
+{
   create_directories(extract_directory(path));
   auto expanded_path = expand_tilde(path);
 	return open(expanded_path.c_str(), O_CREAT|O_RDWR, 0664);
