@@ -1,7 +1,14 @@
 atc
 ===
 
-C++ ported version of **atc** game which is originally made by Ed James.
+The ATC game which is made by Ed James. This is a C++ version running on
+MacOS.
+
+How to build and run:
+
+  cd <the atc source repository>
+  ./build.sh
+  ./arc
 
 bsdgames-osx: the classic bsdgames ported to Mac OS X
 -----------------------------------------------------
